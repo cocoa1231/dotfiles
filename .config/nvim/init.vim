@@ -1,21 +1,25 @@
 call plug#begin("~/.vim/plugged")
   " Plugin Section
   Plug 'dracula/vim'
+  Plug 'projekt0n/github-nvim-theme'
   Plug 'numToStr/Comment.nvim'
   Plug 'ziglang/zig.vim'
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
   Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  " Plug 'junegunn/fzf.vim'
   Plug 'JuliaEditorSupport/julia-vim'
   Plug 'kdheepak/JuliaFormatter.vim'
   Plug 'jpalardy/vim-slime'
   Plug 'neovim/nvim-lspconfig'
+  Plug 'neovim/nvim-lsp'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'fannheyward/coc-julia'
   Plug 'tpope/vim-sensible'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 call plug#end()
 
 "Config Section
@@ -23,7 +27,7 @@ if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
-colorscheme dracula
+colorscheme github_dark
 set number
 
 let g:NERDTreeShowHidden = 1
@@ -49,19 +53,29 @@ function! OpenTerminal()
 endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
 
-nnoremap <C-p> :FZF<CR>
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit'
-  \}
+" nnoremap <C-p> :FZF<CR>
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-s': 'split',
+"   \ 'ctrl-v': 'vsplit'
+"   \}
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 runtime macros/matchit.vim
 set mouse=a
 set sw=4 ts=4
 
-inoremap <expr> <TAB> pumvisible() ? "<C-y>" : "<TAB>"
+"inoremap <expr> <TAB> pumvisible() ? "<C-y>" : "<TAB>"
+
+
 lua << EOF
-require('Comment').setup()
+	require('Comment').setup()
+	require'lspconfig'.julials.setup{}
+	vim.lsp.set_log_level("debug")
 EOF
 
