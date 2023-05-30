@@ -2,6 +2,7 @@ call plug#begin("~/.vim/plugged")
   " Plugin Section
   Plug 'dracula/vim'
   Plug 'projekt0n/github-nvim-theme'
+  Plug 'nvim-tree/nvim-web-devicons'
   Plug 'numToStr/Comment.nvim'
   Plug 'ziglang/zig.vim'
 " Plug 'SirVer/ultisnips'
@@ -69,6 +70,7 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 runtime macros/matchit.vim
 set mouse=a
 set sw=4 ts=4
+set cc=80 tw=80
 
 "inoremap <expr> <TAB> pumvisible() ? "<C-y>" : "<TAB>"
 
